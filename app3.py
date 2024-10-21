@@ -258,9 +258,10 @@ class DatamapperDocumentParser:
                                     date = f"{self.month.get(day_month[0][0])}/{row[0]}/{day_month[0][1]}"
                                     row[0] = date
                                     row_data = [item for item in row if item != 'None']
-                                    #print("ROW DATA>",row_data)
+                                    print("ROW DATA>",row_data)
+                                    all_digits = all(item.isdigit() for item in row_data[1:])
                                     main_row = [name if name else '', meter if meter else ''] + [item for item in row if item != 'None']
-                                    if len(main_row) == header_length:
+                                    if not all_digits:
                                         csvwriter.writerow(main_row)
                             except ValueError:
                                 continue  # Ignore rows that don't start with a number

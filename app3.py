@@ -123,6 +123,7 @@ class DatamapperDocumentParser:
         csv_file = 'output.csv'
         #line_list = []
         csv_output = StringIO()
+        buff = StringIO()
         with pdfplumber.open(pdf_file) as pdf:
             csvwriter = csv.writer(csv_output)
             header_written = False
@@ -166,8 +167,10 @@ class DatamapperDocumentParser:
                             continue
 
         csv_output.seek(0)
+        print("s",csv_output)
+        
         df = pd.read_csv(csv_output)
-        df.columns = columns= [
+        df.columns = [
     "Name",
     "MeterID",
     "Day",
@@ -183,7 +186,11 @@ class DatamapperDocumentParser:
     
 ]
         print("DF>>" , df)
-        return csv_output, csv_file ,df
+        csv_output = df.to_csv(buff,index=False)
+        buff.seek(0)
+        print("bbb",csv_output)
+      
+        return buff, csv_file ,df
     
 
     def parse_csv_from_excel(self,excel_file):

@@ -290,6 +290,8 @@ class DatamapperDocumentParser:
                 for line in lines:
                     if any(word in line for word in self.header_index):
                         if not header_written:
+                            head  = line.split()
+                            head.pop()
                             header_row = ['Name', 'MeterID'] + line.split()
                             header_length  =len(header_row)
                             csvwriter.writerow(header_row)
@@ -304,6 +306,7 @@ class DatamapperDocumentParser:
                             if row[3:]:  # Ensure there are more columns after the first 3
                                 #date = f"{month.get(day_month.split()[0])}/{row[0]}/{day_month.split()[1]}"
                                 row[0] = 'date'
+                                row.pop()
                                 csvwriter.writerow([name if name else '', meter if meter else ''] + row)
                         except :
                             continue  # Ignore rows that don't start with a number
@@ -322,4 +325,20 @@ class DatamapperDocumentParser:
                 output , output_file = self.parse_csv_from_excel(response['file'])
         if output and output_file:
             return output , output_file 
+
+    def convert_targa_file(self,uploaded_file):
+        csv_file = 'output.csv'
+        #line_list = []
+        csv_output = StringIO()
+        buff = StringIO()
+        df = pd.read_excel(uploaded_file)
+        df['Production_Day'] = pd.to_datetime(df['Production_Day'], format='%Y%m%d').dt.strftime('%m-%d-%Y')
+
+        csv_output = df.to_csv(buff,index=False)
+        buff.seek(0)
+        print("bbb",csv_output)
+      
+        return buff, csv_file 
+        
+
                   

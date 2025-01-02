@@ -2,7 +2,7 @@ import streamlit as st
 from io import StringIO
 from app3 import DatamapperDocumentParser
 obj = DatamapperDocumentParser()
-st.title("File Converter to CSV")
+#st.title("File Converter to CSV")
 
     # Upload file
 st.markdown(

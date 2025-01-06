@@ -24,10 +24,10 @@ if uploaded_file is not None:
     if selected_option in ['IACX' , 'Producers Midstream']:
             
                     if uploaded_file.type == "application/pdf":
-                        csv_output, csv_file = obj.take_files_2(uploaded_file)
+                        csv_output, csv_file = obj.take_files(uploaded_file)
                     elif uploaded_file.type in ["application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"]:
                 
-                        csv_output , csv_file  = obj.take_files_3(uploaded_file)
+                        csv_output , csv_file  = obj.take_files(uploaded_file)
     if selected_option in ['Targa']:
             #if uploaded_file is not None:
                 csv_output ,csv_file = obj.convert_targa_file(uploaded_file)
